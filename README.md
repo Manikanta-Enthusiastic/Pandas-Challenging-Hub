@@ -38,7 +38,7 @@ Whether you’re preparing for **data science interviews**, improving your **dat
 1. Clone the repo:
 
    ```bash
-   git clone https://github.com/Manikanta-Enthusiastic/Pandas-Challenging-Hub.git
+   https://github.com/Manikanta-Enthusiastic/Pandas-Challenging-Hub.git
    ```
 2. Install dependencies:
 

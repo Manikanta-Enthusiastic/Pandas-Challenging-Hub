@@ -1,3 +1,38 @@
+'''Python
+import pandas as pd
+
+def read_books(reading_sessions):
+    # Aggregate total sessions, highest, and lowest rating
+    result = reading_sessions.groupby('book_id', as_index=False).agg(
+        total_sessions=('session_id', 'count'),
+        highest_rating=('session_rating', 'max'),
+        lowest_rating=('session_rating', 'min')
+    )
+    
+    # Count extreme ratings (<=2 or >=4)
+    extreme_counts = reading_sessions.groupby('book_id')['session_rating'] \
+        .apply(lambda x: ((x <= 2) | (x >= 4)).sum()) \
+        .reset_index(name='extreme_ratings')
+    
+    # Merge results
+    result = result.merge(extreme_counts, on='book_id')
+    
+    # Apply filters
+    return result[
+        (result['total_sessions'] >= 5) &
+        (result['highest_rating'] >= 4) &
+        (result['lowest_rating'] <= 2)
+    ]
+
+def merged_df(df, books):
+    df['rating_spread'] = df['highest_rating'] - df['lowest_rating']
+    df['polarization_score'] = round(df['extreme_ratings'] / df['total_sessions'], 2)
+    return df.merge(books, on='book_id', how='inner') \
+             [['book_id','title','author','genre','pages','rating_spread','polarization_score']] \
+             .sort_values(by=['polarization_score', 'title'], ascending=[False, False]) \
+             .reset_index(drop=True)
+
+def main():```python
 import pandas as pd
 
 def read_books(reading_sessions):
@@ -46,3 +81,20 @@ def main():
 
 if __name__ == "__main__":
     main()
+```
+
+    # Load sample data
+    books = pd.read_csv("books.csv")
+    reading_sessions = pd.read_csv("reading_sessions.csv")
+
+    # Run pipeline
+    pd_1 = read_books(reading_sessions)
+    pd_2 = merged_df(pd_1, books)
+
+    # Show results
+    print("\n📊 Polarized Books:\n")
+    print(pd_2)
+
+if __name__ == "__main__":
+    main()
+'''

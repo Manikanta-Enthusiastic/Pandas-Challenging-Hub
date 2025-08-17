@@ -1,0 +1,20 @@
+# Polarized Books Project 📚
+
+This project analyzes book reading sessions to identify **polarized books** — books that receive both very high and very low ratings.  
+
+## Features
+- Calculates total sessions per book
+- Finds highest and lowest ratings
+- Identifies extreme ratings (≤2 or ≥4)
+- Computes polarization score
+- Sorts books by polarization score
+
+## Files
+- `polarized_books.py` → Main script
+- `requirements.txt` → Python dependencies
+- `README.md` → Project documentation
+
+## Usage
+1. Install requirements:  
+   ```bash
+   pip install -r requirements.txt
